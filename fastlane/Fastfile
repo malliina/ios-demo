@@ -21,9 +21,17 @@ platform :ios do
   desc "Build with connect"
   lane :connect do
     setup_ci if ENV['CI']
+    unlock_keychain(
+      path: "fastlane_tmp_keychain",
+      password: "",
+      set_default: true
+    )
     import_certificate(
       certificate_path: "./certificate.p12",
       certificate_password: ENV["CERTIFICATE_PASSWORD"]
+      keychain_name: "fastlane_tmp_keychain",
+      keychain_password: "",
+      log_output: true
     )
     api_key = app_store_connect_api_key(
       key_id: "VG8XUGYMD6",
