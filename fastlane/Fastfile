@@ -41,6 +41,7 @@ platform :ios do
       in_house: false # optional but may be required if using match/sigh
     )
     get_provisioning_profile(filename: "App.mobileprovision")
+    increment_build_number(xcodeproj: "Demo.xcodeproj")
     build_app(scheme: "Demo")
     upload_to_testflight
   end
