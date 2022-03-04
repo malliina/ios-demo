@@ -9,10 +9,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-      - name: Provisioning profile
-        run: fastlane sigh
+      - name: Appstore Connect API key
+        run: |
+          echo "$APPSTORE_CONNECT_API_KEY" > AuthKey_VG8XUGYMD6.p8.b64
+          base64 -d -i AuthKey_VG8XUGYMD6.p8.b64 > AuthKey_VG8XUGYMD6.p8
         env:
-          FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD: ${{ secrets.FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD }}
+          APPSTORE_CONNECT_API_KEY: ${{ secrets.APPSTORE_CONNECT_API_KEY }}
+      - name: Build
+        run: fastlane connect
       - name: Release beta
         run: fastlane beta
         env:
